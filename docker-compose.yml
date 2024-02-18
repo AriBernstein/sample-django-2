@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+
+  django:
+    build: ./pollsproject
+    container_name: ${DJANGO_CONTAINER_NAME} 
+    env_file:
+      - .env
+    command: bash -c "
+      python manage.py makemigrations
+      && python manage.py migrate
+      && python manage.py runserver ${DJANGO_HOST}:${DJANGO_PORT}"
+    ports:
+      - ${DJANGO_PORT}:${DJANGO_PORT}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16.1-alpine
+    container_name: ${POSTGRES_CONTAINER_NAME}
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:${POSTGRES_VOLUME_PATH}
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
