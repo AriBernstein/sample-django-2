@@ -12,6 +12,14 @@ update after change to model
 docker exec -t -i django /bin/bash -c "python3 manage.py makemigrations ; python3 manage.py migrate"
 ```
 
+to create admin
+```
+docker exec -t -i django /bin/bash
+Username: admin
+email: admin@admin.com
+password: p
+```
+
 python3.10 -m venv venv
 . venv/bin/activate
 pip3 install django
