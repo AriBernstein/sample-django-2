@@ -8,19 +8,21 @@ services:
     env_file:
       - .env
     command: bash -c "
-      python manage.py makemigrations
+         python manage.py makemigrations
       && python manage.py migrate
       && python manage.py runserver ${DJANGO_HOST}:${DJANGO_PORT}"
     ports:
       - ${DJANGO_PORT}:${DJANGO_PORT}
     volumes:
-      - ./pollsproject:/usr/src/app
+      - ./pollsproject:${DJANGO_WORKING_DIR}
     depends_on:
       db:
         condition: service_healthy
 
   db:
-    image: postgres:16.1-alpine
+    image: postgres:16.2-alpine
+    env_file:
+      - .env
     container_name: ${POSTGRES_CONTAINER_NAME}
     environment:
       POSTGRES_USER: ${POSTGRES_USER}

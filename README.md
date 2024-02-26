@@ -10,6 +10,8 @@ docker exec -t -i django /bin/bash
 update after change to model
 ```
 docker exec -t -i django /bin/bash -c "python3 manage.py makemigrations ; python3 manage.py migrate"
+
+docker exec -t -i django /bin/bash -c "python3 manage.py test pollsapp;"
 ```
 
 to create admin
