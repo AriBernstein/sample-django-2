@@ -24,7 +24,7 @@ password: p
 
 python3.10 -m venv venv
 . venv/bin/activate
-pip3 install django
+pip3 install -r pollsproject/requirements.txt
 django-admin startproject pollsproject
 cd pollsproject 
 python3 manage.py startapp pollsapp

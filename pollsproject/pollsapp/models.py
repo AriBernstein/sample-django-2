@@ -28,3 +28,12 @@ class Choice(models.Model):
         return self.choice_text
     
 
+class Profile(models.Model):
+    profile_id = models.AutoField(primary_key=True),
+    profile_id_int = models.IntegerField(unique=True, default=0)
+    f_name = models.CharField(max_length=200)
+    l_name = models.CharField(max_length=200)
+    email = models.EmailField(max_length=200)
+    company = models.CharField(max_length=200)
+    position = models.CharField(max_length=200)
+    looking_for = models.CharField(max_length=2000)
